@@ -1,20 +1,16 @@
 # Uncomment the required imports before adding the code
 
-# from django.shortcuts import render
-# from django.http import HttpResponseRedirect, HttpResponse
-# from django.contrib.auth.models import User
-# from django.shortcuts import get_object_or_404, render, redirect
-# from django.contrib.auth import logout
-# from django.contrib import messages
-# from datetime import datetime
-
-from django.http import JsonResponse
+from datetime import datetime
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
-import logging
-import json
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_exempt
+import json
+import logging
 # from .populate import initiate
-
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -38,8 +34,28 @@ def login_user(request):
         data = {"userName": username, "status": "Authenticated"}
     return JsonResponse(data)
 
-# Create a `logout_request` view to handle sign out request
-# def logout_request(request):
+logout(request) # Terminate user session
+    data = {"userName":""} # Return empty username
+    return JsonResponse(data)`
+// Build logout URL and Make GET request to logout endpoint
+  let logout_url = window.location.origin+"/djangoapp/logout";
+  const res = await fetch(logout_url, {
+    method: "GET",
+  });
+
+  const json = await res.json();
+  if (json) {
+	// Clear session storage and reload page
+    let username = sessionStorage.getItem('username');
+    sessionStorage.removeItem('username');
+    window.location.href = window.location.origin;
+    window.location.reload();
+	 // Notify user of logout
+    alert("Logging out "+username+"...") 
+  }
+  else {
+    alert("The user could not be logged out.")
+  }
 # ...
 
 # Create a `registration` view to handle sign up request
