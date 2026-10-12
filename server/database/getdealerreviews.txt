@@ -1,0 +1,1 @@
+curl -X GET "http://localhost:3030/fetchReviews/dealer/15" -o getdealerreviews.txt
